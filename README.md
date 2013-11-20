@@ -16,3 +16,11 @@ POST -> Add new highscore entry
 				"player": "MyPlayer",
 				"score": "56789"
 			}
+			
+Response Format:
+	{"result":
+		[
+			{"game":"MyGame","player":"MyPlayer","score":56789},
+			{"game":"MySecondGame","player":"MyPlayer","score":0}
+		]
+	}
