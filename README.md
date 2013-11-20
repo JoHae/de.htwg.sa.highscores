@@ -11,6 +11,7 @@ GET  ->  get all highscores as json
 		
 		urltoServer/getHighscores
 
+		HTTP RESPONSE BODY (json):
 		{"result":
 			[
 				{"game":"MyGame","player":"MyPlayer","score":56789},
