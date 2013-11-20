@@ -8,38 +8,22 @@ import java.util.List;
 import models.Highscore;
 import models.HighscoreException;
 import models.IHighscore;
+import play.libs.Json;
+import play.mvc.Controller;
+import play.mvc.Result;
 
-import com.fasterxml.jackson.databind.JsonNode;
-
-import play.*;
-import play.mvc.*;
-import views.html.*;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 public class Application extends Controller {
 
 	private static List<IHighscore> scoreList = new ArrayList<IHighscore>();
 
-	public static Result index() {
-		// String[] games = { "Pixelwars", "CoD", "VierGewinnt", "CoD",
-		// "VierGewinnt" };
-		// String[] player = { "Ich", "Du", "Er", "Sie", "Es" };
-		// Long[] score = { 1L, 0L, 500L, 100L, 1000L };
-		//
-		// for (int i = 0; i < games.length; i++) {
-		// IHighscore s = new Highscore();
-		// s.setGame(games[i]);
-		// s.setPlayer(player[i]);
-		// s.setScore(score[i]);
-		// scoreList.add(s);
-		// }
-		// sortList();
-
-		return ok(index.render(scoreList));
+	public static Result index() throws HighscoreException {
+		return ok(getResult());
 	}
 
-	public static Result addHighscoreHttp(String game, String player, Long score) {
-		System.out.println(game + player + score);
-
+	public static Result addHighscoreHttp(String game, String player, Long score) throws HighscoreException {
 		IHighscore s = new Highscore();
 
 		s.setGame(game);
@@ -47,10 +31,10 @@ public class Application extends Controller {
 		s.setScore(score);
 		scoreList.add(s);
 		sortList();
-		return ok(index.render(scoreList));
+        return ok(getResult());
 	}
 
-	public static Result addHighscoreJson() {
+	public static Result addHighscoreJson() throws HighscoreException {
 		IHighscore s = new Highscore();
         try {
                 System.out.println(request().body().asJson());
@@ -61,7 +45,7 @@ public class Application extends Controller {
 
         scoreList.add(s);
         sortList();
-        return ok(index.render(scoreList));
+        return ok(getResult());
 	}
 
 	private static void sortList() {
@@ -83,5 +67,16 @@ public class Application extends Controller {
 
 		};
 		Collections.sort(scoreList, c);
+	}
+	
+	private static ObjectNode getResult() throws HighscoreException {
+		ObjectNode result = Json.newObject();
+        ArrayNode resultArr = result.arrayNode();
+        for (IHighscore ts : scoreList) {
+        	resultArr.add(ts.serializeJson());
+        }
+        
+        result.put("result", resultArr);
+        return result;
 	}
 }

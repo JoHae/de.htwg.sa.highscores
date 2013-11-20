@@ -1,12 +1,15 @@
 package models;
 
+import play.libs.Json;
+
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 public class Highscore implements IHighscore {
 
 	String player;
 	String game;
-	long score;
+	Long score;
 
 	@Override
 	public void setGame(String game) {
@@ -29,12 +32,12 @@ public class Highscore implements IHighscore {
 	}
 
 	@Override
-	public void setScore(long score) {
+	public void setScore(Long score) {
 		this.score = score;
 	}
 
 	@Override
-	public long getScore() {
+	public Long getScore() {
 		return score;
 	}
 
@@ -57,5 +60,22 @@ public class Highscore implements IHighscore {
 		this.game = game;
 		this.player = player;
 		this.score = score;
+	}
+	
+	@Override
+	public ObjectNode serializeJson() throws HighscoreException {
+		if (player == null || game == null || score == null) {
+			throw new HighscoreException(
+					"Some parameters cannot be parsed. Please ensure that"
+							+ "all parameters are given in request (game, player, score)");
+		}
+		
+		ObjectNode result = Json.newObject();
+		
+		result.put("game", game);
+	    result.put("player", player);
+	    result.put("score", score);
+	    
+	    return result;
 	}
 }
