@@ -6,7 +6,8 @@ RESTful highscore server:
 Requests:
 
 GET  -> get all highscores as json
-	- example:
+
+
 		{"result":
 			[
 				{"game":"MyGame","player":"MyPlayer","score":56789},
@@ -15,14 +16,16 @@ GET  -> get all highscores as json
 		}	
 
 POST -> Add new highscore entry with HTTP parameters
-	- example:
+
+
+
 		urltoServer/addHighscore?game=MyGame&player=MyPlayer&score=56789
 		
 POST -> Add new highscore entry with JSON
-	- example:
-		urltoServer/addHighscoreJson
-		HTTP BODY (json):
 
+		urltoServer/addHighscoreJson
+		
+		HTTP BODY (json):
 			{
 				"game": "MyGame",
 				"player": "MyPlayer",
