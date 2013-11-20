@@ -4,6 +4,7 @@
 
 # Home page
 GET      /                           controllers.Application.index()
+GET      /getHighscores              controllers.Application.getHighscores()
 POST     /addHighscore               controllers.Application.addHighscoreHttp(game: String, player: String, score: Long)
 POST     /addHighscoreJson           controllers.Application.addHighscoreJson()
 

@@ -11,6 +11,7 @@ import models.IHighscore;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
+import views.html.index;
 
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -20,6 +21,10 @@ public class Application extends Controller {
 	private static List<IHighscore> scoreList = new ArrayList<IHighscore>();
 
 	public static Result index() throws HighscoreException {
+		return ok(index.render(scoreList));
+	}
+	
+	public static Result getHighscores() throws HighscoreException {
 		return ok(getResult());
 	}
 
