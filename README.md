@@ -5,8 +5,11 @@ RESTful highscore server:
 
 Requests:
 
-GET  -> get all highscores as json
+GET  ->  show website with highscores	
 
+GET  ->  get all highscores as json
+		
+		urltoServer/getHighscores
 
 		{"result":
 			[
